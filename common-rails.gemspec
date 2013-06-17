@@ -1,11 +1,11 @@
 $:.push File.expand_path("../lib", __FILE__)
 
 # Maintain your gem's version:
-require "common_rails/version"
+require "common-rails/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "common_rails"
+  s.name        = "common-rails"
   s.version     = CommonRails::VERSION
   s.authors     = ["TODO: Your name"]
   s.email       = ["TODO: Your email"]

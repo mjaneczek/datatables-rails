@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    common_rails (0.0.1)
+    common-rails (0.0.1)
       rails (~> 4.0.0.rc2)
 
 GEM
@@ -84,5 +84,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  common_rails!
+  common-rails!
   sqlite3
