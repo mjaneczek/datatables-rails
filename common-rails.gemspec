@@ -7,11 +7,11 @@ require "common-rails/version"
 Gem::Specification.new do |s|
   s.name        = "common-rails"
   s.version     = CommonRails::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of CommonRails."
-  s.description = "TODO: Description of CommonRails."
+  s.authors     = ["Mercomp", "Aleksander Podlaski"]
+  s.email       = ["info@mercomp.pl"]
+  s.homepage    = "https://github.com/mercomp/common-rails"
+  s.summary     = "Część wspólna wszystkich projektów rails"
+  s.description = "Część wspólna wszystkich projektów rails"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
