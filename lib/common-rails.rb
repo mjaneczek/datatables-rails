@@ -10,7 +10,7 @@ module CommonRails
     end
     
     rake_tasks do
-      load "common-rails/rake/db_all.rake"
+      load "tasks/db_all.rake"
     end
   end
 end
