@@ -1,6 +1,12 @@
+require 'application_responder'
+
 module CommonRails
   module Controller
-
+    self.responder = CommonRails::ApplicationResponder
+    protect_from_forgery with: :exception
+    respond_to :html, :json
+    helper_method :full_title
+    
     def full_title(page_title)
       base_title = t("title")
       if page_title.blank?
