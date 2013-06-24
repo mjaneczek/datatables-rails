@@ -1,5 +1,5 @@
-require 'action_controller/base'
-require 'common-rails/controller'
+require 'rails'
+#require 'common-rails/controller'
 
 module CommonRails
   class Railtie < ::Rails::Railtie
@@ -12,9 +12,8 @@ module CommonRails
     end
     
     initializer "extend Controller with sorcery" do |app|
-      ActionController::Base.send(:include, CommonRails::Controller)
-      # ActionController::Base.helper_method :current_user
-      # ActionController::Base.helper_method :logged_in?
+      #ActionController::Base.send(:include, CommonRails::Controller)
+      #self.responder = CommonRails::ApplicationResponder
     end
     
     rake_tasks do
