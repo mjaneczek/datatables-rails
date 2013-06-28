@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    common-rails (0.0.2)
+    common-views (0.0.3)
       railties (= 4.0.0)
       responders
 
@@ -110,7 +110,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
-  common-rails!
+  common-views!
   jbuilder (~> 1.2)
   jquery-rails
   rails (= 4.0.0)
