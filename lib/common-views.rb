@@ -1,7 +1,7 @@
 require 'rails'
 #require 'common-rails/controller'
 
-module CommonRails
+module CommonViews
   class Railtie < ::Rails::Railtie
     
     config.app_generators do |g|

@@ -1,15 +1,15 @@
 $:.push File.expand_path("../lib", __FILE__)
 
 # Maintain your gem's version:
-require "common-rails/version"
+require "common-views/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "common-rails"
+  s.name        = "common-views"
   s.version     = CommonRails::VERSION
   s.authors     = ["Mercomp", "Aleksander Podlaski"]
   s.email       = ["info@mercomp.pl"]
-  s.homepage    = "https://github.com/mercomp/common-rails"
+  s.homepage    = "https://github.com/mercomp/common-views"
   s.summary     = "Część wspólna wszystkich projektów rails"
   s.description = "Część wspólna wszystkich projektów rails"
 
