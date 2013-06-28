@@ -7,7 +7,7 @@ module CommonViews
     config.app_generators do |g|
       #config.app_generators.scaffold_controller = :nmc_controller
       #config.app_generators.template_engine :nmc
-      g.templates.unshift File::expand_path('templates', __FILE__)
+      g.templates.unshift File::expand_path('./templates', __FILE__)
       g.stylesheets = false
     end
 
