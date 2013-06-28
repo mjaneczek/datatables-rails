@@ -6,7 +6,7 @@ require "common-views/version"
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "common-views"
-  s.version     = CommonRails::VERSION
+  s.version     = CommonViews::VERSION
   s.authors     = ["Mercomp", "Aleksander Podlaski"]
   s.email       = ["info@mercomp.pl"]
   s.homepage    = "https://github.com/mercomp/common-views"
