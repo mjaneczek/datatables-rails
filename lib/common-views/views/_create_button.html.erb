@@ -1,0 +1,3 @@
+<% content_for :buttons do %>
+  <%= link_to('Dodaj', send("new_#{type.name.underscore}_path"), class: 'btn btn-success pull-right') if can? :create, type %>
+<% end %>

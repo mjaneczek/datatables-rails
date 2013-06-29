@@ -50,6 +50,10 @@ module CommonViews
           end
         end
 
+        def create_button_tag(type)
+            render 'helpers/create_button', :type => type
+        end
+
         def simple_table_for(items)
           content_tag :table, class: 'table' do
             concat content_tag(:thead, content_tag(:tr, content_tag(:th, 'Nazwa') + content_tag(:th)))
@@ -60,31 +64,35 @@ module CommonViews
           end
         end
 
-        def table_tag(elements, *fields)
-          return if elements.empty?
-
-          if fields.empty?
-            fields = elements.first.class.column_names.select { |column| IGNORED_COLUMNS.exclude? column }
-          end
-
-          ths = fields.map do |value|
-            content_tag(:th, elements.first.class.human_attribute_name(value))
-          end
-
-          thead = content_tag :thead, content_tag(:tr, ths.reduce(:+))
-
-          trs = elements.map do |element|
-            tds = fields.map do |value|
-              content_tag(:td, element.try(value))
-            end
-
-            content_tag(:tr, tds.reduce(:+) + content_tag(:td, table_standard_buttons_tag(element)))
-          end
-
-          tbody = content_tag :tbody, trs.reduce(:+)
-
-          content_tag :table, thead.concat(tbody), class: "table"
+        def table_tag(elements, options = {}, *fields)
+          render 'helpers/table', model: elements, columns: fields, options: options
         end
+
+        # def table_tag(elements, *fields)
+        #   return if elements.empty?
+        # 
+        #   if fields.empty?
+        #     fields = elements.first.class.column_names.select { |column| IGNORED_COLUMNS.exclude? column }
+        #   end
+        # 
+        #   ths = fields.map do |value|
+        #     content_tag(:th, elements.first.class.human_attribute_name(value))
+        #   end
+        # 
+        #   thead = content_tag :thead, content_tag(:tr, ths.reduce(:+))
+        # 
+        #   trs = elements.map do |element|
+        #     tds = fields.map do |value|
+        #       content_tag(:td, element.try(value))
+        #     end
+        # 
+        #     content_tag(:tr, tds.reduce(:+) + content_tag(:td, table_standard_buttons_tag(element)))
+        #   end
+        # 
+        #   tbody = content_tag :tbody, trs.reduce(:+)
+        # 
+        #   content_tag :table, thead.concat(tbody), class: "table"
+        # end
     end
   
   end
