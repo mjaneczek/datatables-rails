@@ -1,0 +1,5 @@
+<span class="pull-right">
+  concat link_to('Edytuj', edit_path, class: 'btn btn-small') if can? :update, element
+  concat ' '
+  concat link_to('Usuń', element, method: :delete, data: { confirm: 'Czy jesteś pewien?' }, class: 'btn btn-small btn-danger') if can? :destroy, element
+</span>

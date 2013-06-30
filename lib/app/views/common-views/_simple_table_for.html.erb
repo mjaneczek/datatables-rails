@@ -1,0 +1,15 @@
+<table class="table">
+  <thead>
+    <th>Nazwa</th>
+    <th></th>
+  </thead>
+
+  <tbody>
+    <% items.each do |item| %>
+      <tr>
+        <td><%= item.name %></td>
+        <td nowrap><%= table_standard_buttons_tag(item) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
