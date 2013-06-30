@@ -12,6 +12,7 @@ module CommonViews
     end
 
     initializer "extend Controller with sorcery" do |app|
+      ActionController::Base.prepend_view_path File.join(File.dirname(__FILE__), '..', 'app', 'views')
       ActionController::Base.send(:include, CommonViews::Controller)
       ActionView::Base.send(:include, CommonViews::Helpers)
     end
