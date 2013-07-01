@@ -29,11 +29,7 @@ module CommonViews
       end
 
       def form_standard_buttons_tag(f, controller)
-        content_tag :div, class: 'form-actions' do
-          concat link_to('Anuluj', controller, class: 'btn')
-          concat ' '
-          concat f.button(:submit, class: 'btn-success')
-        end
+        render 'common-views/form_standard_buttons_tag', f: f, controller: controller
       end
 
       def table_standard_buttons_tag(element)
