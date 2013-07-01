@@ -25,10 +25,9 @@
       <% end %>
     </tbody>
   </table>
+<% end %>
 
-  <%= javascript_tag do %>
-    window.sorting_column = '<%= options.try(:[], :sorting_column) || 0 %>';
-    window.sorting_type = '<%= options.try(:[], :sorting_type) || "asc" %>'
-  <% end %>
-
+<%= javascript_tag do %>
+  window.sorting_column = '<%= options.try(:[], :sorting_column) || 0 %>';
+  window.sorting_type = '<%= options.try(:[], :sorting_type) || "asc" %>'
 <% end %>
