@@ -50,7 +50,10 @@ module CommonViews
         render 'common-views/table_tag', model: elements, columns: fields, options: options
       end
 
-    end
+      def import_tag(path, label)
+        render 'common-views/file_input_tag', path: path, label: label
+      end
 
+    end
   end
 end

@@ -1,0 +1,13 @@
+<%= simple_form_for :import, { url: path } do |f| %>
+  <div class="form-inputs">
+    <%= f.input :file, as: :file, input_html: { id: "import_file", style: "display: none;" },
+      label: label %>
+    <div class="input-append">
+      <input id="filePath" class="input-large" type="text" readonly="readonly">
+      <a class="btn" onclick="$('input[id=import_file]').click();">Przeglądaj</a>
+    </div>
+    <div>
+      <%= f.button :submit, "Importuj" %>
+    </div>
+  </div>
+<% end %>
