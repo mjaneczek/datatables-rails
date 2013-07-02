@@ -1,29 +1,30 @@
 <% if model.any? %>
   <% name = model.first.class.name %>
 
-  <table class="table table-striped" id="simple_table">
+  <table class="table table-striped" id="simple_table" 
+    data-source="<%= send("#{name.underscore.pluralize}_path", { :format => :json, :only_path => false }) %>">
     <thead>
       <tr>
         <% columns.each do |column| %>
           <th><%= model.first.class.human_attribute_name(column) %></th>
         <% end %>
         <% unless options.try(:fetch, :disable_edit_delete) %>
-          <th> </th>
+          <th>Opcje pozycji</th>
         <% end %>
       </tr>
     </thead>
-    <tbody>
-      <% model.each do |item| %>
+<!--     <tbody>
+      <%# model.each do |item| %>
         <tr>
-          <% columns.each do |column| %>
-            <td> <%= item.try(column) %> </td>
-          <% end %>
-          <% unless options.try(:[], :disable_edit_delete) %>
-            <td nowrap><%= table_standard_buttons_tag(item) %></td>
-          <% end %>
+          <%# columns.each do |column| %>
+            <td> <%#= item.try(column) %> </td>
+          <%# end %>
+          <%# unless options.try(:[], :disable_edit_delete) %>
+            <td nowrap><%#= table_standard_buttons_tag(item) %></td>
+          <%# end %>
         </tr>
-      <% end %>
-    </tbody>
+      <%# end %>
+    </tbody> -->
   </table>
 <% end %>
 
