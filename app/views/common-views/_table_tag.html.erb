@@ -2,7 +2,7 @@
   <% name = model.first.class.name %>
 
   <table class="table table-striped" id="simple_table" 
-    data-source="<%= send("#{name.underscore.pluralize}_path", { :format => :json, :only_path => false }) %>">
+    data-source="<%= options.try(:[], :source_path) || send("#{name.underscore.pluralize}_path", { :format => :json, :only_path => false }) %>">
     <thead>
       <tr>
         <% columns.each do |column| %>
@@ -30,5 +30,6 @@
 
 <%= javascript_tag do %>
   window.sorting_column = '<%= options.try(:[], :sorting_column) || 0 %>';
-  window.sorting_type = '<%= options.try(:[], :sorting_type) || "asc" %>'
+  window.sorting_type = '<%= options.try(:[], :sorting_type) || "asc" %>';
+  window.disable_edit_delete = '<%= options.try(:[], :disable_edit_delete || false) %>';
 <% end %>
