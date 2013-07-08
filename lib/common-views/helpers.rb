@@ -46,8 +46,8 @@ module CommonViews
         render 'common-views/simple_table_for', items: items
       end
 
-      def table_tag(elements, options = {}, *fields)
-        render 'common-views/table_tag', model: elements, columns: fields, options: options
+      def table_tag(class_type, options = {}, *columns)
+        render 'common-views/table_tag', class_type: class_type, columns: columns, options: options
       end
 
       def import_tag(path, label)
