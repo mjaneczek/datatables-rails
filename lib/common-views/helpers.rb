@@ -47,6 +47,8 @@ module CommonViews
       end
 
       def table_tag(class_type, options = {}, *columns)
+        columns = Settings.send(class_type.name.underscore).try(:[], "columns") if columns.empty?
+
         render 'common-views/table_tag', class_type: class_type, columns: columns, options: options
       end
 
