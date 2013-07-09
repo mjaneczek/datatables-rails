@@ -47,7 +47,7 @@ module CommonViews
       end
 
       def table_tag(class_type, options = {}, *columns)
-        config = Settings.send(class_type.name.underscore).dup
+        config = Settings.send(options[:settings_name] || class_type.name.underscore).dup
         config[:columns] = columns if columns.any?
         
         options.each do |key, value|
