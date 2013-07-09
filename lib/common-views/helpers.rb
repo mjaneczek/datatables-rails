@@ -47,9 +47,14 @@ module CommonViews
       end
 
       def table_tag(class_type, options = {}, *columns)
-        columns = Settings.send(class_type.name.underscore).try(:[], "columns") if columns.empty?
+        config = Settings.send(class_type.name.underscore).dup
+        config[:columns] = columns if columns.any?
+        
+        options.each do |key, value|
+          config[key] = value;
+        end
 
-        render 'common-views/table_tag', class_type: class_type, columns: columns, options: options
+        render 'common-views/table_tag', class_type: class_type, columns: config[:columns], options: config
       end
 
       def import_tag(path, label)

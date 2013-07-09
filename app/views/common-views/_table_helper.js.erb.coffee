@@ -1,6 +1,6 @@
 sorting_column = "<%= options.try(:[], :sorting_column) || 0 %>";
 sorting_type = "<%= options.try(:[], :sorting_type) || 'asc' %>";
-disable_edit_delete = "<%= options.try(:[], :disable_edit_delete) || false %>";
+disable_edit_delete = <%= options.try(:[], :disable_edit_delete) || false %>;
 
 o_table = null
 
@@ -18,7 +18,7 @@ $ ->
     sAjaxSource: $('#simple_table').data('source')
     aoColumnDefs: [
       bSortable: false
-      aTargets: [$("#simple_table thead tr th").length - 1]
+      aTargets: [$("#simple_table thead tr th").length - 1].concat(<%= options.try(:[], :columns_without_sorting) %>)
     ] unless disable_edit_delete
     fnServerParams: (aoData) ->
         column_filter = $("#selected_column").val()
