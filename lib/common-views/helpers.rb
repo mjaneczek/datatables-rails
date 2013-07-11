@@ -32,10 +32,11 @@ module CommonViews
         render 'common-views/form_standard_buttons_tag', f: f, controller: controller
       end
 
-      def table_standard_buttons_tag(element)
-        edit_path = send("edit_#{element.class.name.underscore}_path", element)
+      def table_standard_buttons_tag(element, render_method = "render")
+        edit_path ||= send("edit_#{element.class.name.underscore}_path", element)
         
-        render 'common-views/table_standard_buttons_tag', element: element, edit_path: edit_path
+        send(render_method, partial: 'common-views/table_standard_buttons_tag', formats: [:html],
+          locals: { element: element, edit_path: edit_path })
       end
 
       def create_button_for(type, title = 'Dodaj')
@@ -59,6 +60,11 @@ module CommonViews
 
       def import_tag(path, label)
         render 'common-views/file_input_tag', path: path, label: label
+      end
+
+      def label_tag(text, render_method = "render")        
+        send(render_method, partial: 'common-views/label_tag', formats: [:html],
+          locals: { text: text })
       end
 
     end
