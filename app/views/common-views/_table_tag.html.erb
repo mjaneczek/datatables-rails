@@ -2,6 +2,9 @@
   data-source="<%= options.try(:[], :source_path) || send("#{class_type.name.underscore.pluralize}_path", { :format => :json, :only_path => false }) %>">
   <thead>
     <tr>
+      <% if options.try(:[], :include_blank_th) %>
+        <th></th>
+      <% end %>
       <% columns.each do |column| %>
         <th><%= class_type.human_attribute_name(column) %></th>
       <% end %>
