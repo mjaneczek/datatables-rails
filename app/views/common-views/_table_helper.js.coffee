@@ -1,6 +1,6 @@
-sorting_column = "<%= options.try(:[], :sorting_column) || 0 %>";
-sorting_type = "<%= options.try(:[], :sorting_type) || 'asc' %>";
-disable_edit_delete = <%= options.try(:[], :disable_edit_delete) || false %>;
+sorting_column = "<%= options.try(:[], :sorting_column) || 0 %>"
+sorting_type = "<%= options.try(:[], :sorting_type) || 'asc' %>"
+disable_edit_delete = <%= options.try(:[], :disable_edit_delete) || false %>
 
 o_table = null
 
@@ -22,7 +22,7 @@ $ ->
     ] unless disable_edit_delete
     fnServerParams: (aoData) ->
         column_filter = $("#selected_column").val()
-        aoData.push({name: "column_filter", value: column_filter});
+        aoData.push({name: "column_filter", value: column_filter})
     oLanguage:
       sLengthMenu: "_MENU_ wyników na stronie"
       sZeroRecords: "Nie znaleziono szukanego fragmentu"

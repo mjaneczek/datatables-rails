@@ -1,4 +1,4 @@
-<table class="table table-striped" id="simple_table" 
+<table class="table table-striped" id="simple_table"
   data-source="<%= options.try(:[], :source_path) || send("#{class_type.name.underscore.pluralize}_path", { :format => :json, :only_path => false }) %>">
   <thead>
     <tr>
@@ -16,5 +16,5 @@
 </table>
 
 <%= javascript_tag do %>
-  <%= (render 'common-views/table_helper.js.erb', options: options).html_safe %>
+  <%= render 'common-views/table_helper.js', options: options %>
 <% end %>
