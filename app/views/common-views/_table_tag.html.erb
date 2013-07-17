@@ -1,5 +1,9 @@
 <table class="table table-striped" id="simple_table"
-  data-source="<%= options.try(:[], :source_path) || send("#{class_type.name.underscore.pluralize}_path", { :format => :json, :only_path => false }) %>">
+  data-source="<%= options.try(:[], :source_path) || send("#{class_type.name.underscore.pluralize}_path", { :format => :json, :only_path => false }) %>"
+  data-sorting_column = "<%= options.try(:[], :sorting_column) || 0 %>"
+  data-sorting_type = "<%= options.try(:[], :sorting_type) || 'asc' %>"
+  data-disable_edit_delete = <%= options.try(:[], :disable_edit_delete) || false %>
+  data-column_without_sorting = "<%= options.try(:[], :columns_without_sorting) || [] %>">
   <thead>
     <tr>
       <% if options.try(:[], :include_blank_th) %>
@@ -14,5 +18,3 @@
     </tr>
   </thead>
 </table>
-
-<%= render_safe_js 'common-views/table_helper.js', options: options %>
