@@ -15,6 +15,4 @@
   </thead>
 </table>
 
-<%= javascript_tag do %>
-  <%= render 'common-views/table_helper.js', options: options %>
-<% end %>
+<%= render_safe_js 'common-views/table_helper.js', options: options %>

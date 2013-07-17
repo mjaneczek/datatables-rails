@@ -67,6 +67,10 @@ module CommonViews
           locals: { text: text })
       end
 
+      def render_safe_js(path, options = {})
+        render 'common-views/safe_js', path: path, options: options
+      end
+
     end
   end
 end
