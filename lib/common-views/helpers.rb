@@ -62,8 +62,8 @@ module CommonViews
         render 'common-views/file_input_tag', path: path, label: label
       end
 
-      def label_tag(text, render_method = "render")        
-        send(render_method, partial: 'common-views/label_tag', formats: [:html],
+      def docket_tag(text, render_method = "render")        
+        send(render_method, partial: 'common-views/docket_tag', formats: [:html],
           locals: { text: text })
       end
       
