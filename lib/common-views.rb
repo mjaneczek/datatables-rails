@@ -1,6 +1,7 @@
 require 'rails'
 require 'common-views/helpers'
 require 'common-views/controller'
+require 'common-views/settings'
 
 module CommonViews
   class Railtie < ::Rails::Engine
