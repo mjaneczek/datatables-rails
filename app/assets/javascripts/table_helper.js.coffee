@@ -25,6 +25,7 @@ $ ->
       sInfo: "_START_ - _END_ z _TOTAL_ elementów"
       sInfoEmpty: ""
       sSearch: ""
+      sProcessing: "Ładowanie..."
       sInfoFiltered: "(wyszukano z _MAX_ elementów)"
       oPaginate:
         sFirst: "Pierwsza"
