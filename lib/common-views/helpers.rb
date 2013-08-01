@@ -12,7 +12,7 @@ module CommonViews
       IGNORED_COLUMNS = %w(id created_at updated_at)
 
       def full_title(page_title)
-        t("title") + " | #{page_title}" if page_title
+        t("title") + (" | #{page_title}" unless page_title.blank?).to_s
       end
 
       def flash_to_bootstrap(name)
