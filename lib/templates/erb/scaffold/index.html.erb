@@ -1,6 +1,0 @@
-<%% content_for :title, "Lista <%= human_name %>" %>
-<%% content_for :buttons do %>
-  <%%= link_to 'Nowy <%= human_name %>', new_<%= singular_table_name %>_path, class: "btn btn-success pull-right" %>
-<%% end %>
-
-<%%= table_tag @<%= plural_table_name %> %>
