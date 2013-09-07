@@ -11,7 +11,7 @@ module CommonViews
         #directory 'files', '.', force: options.force?
 
         inject_into_class "app/controllers/application_controller.rb", "ApplicationController", <<-RUBY
-  helper CommonView::Helpers
+  helper CommonViews::Helpers
         RUBY
       end
 

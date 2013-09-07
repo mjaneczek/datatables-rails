@@ -15,7 +15,7 @@ module CommonViews
     def table_standard_buttons_tag(element, render_method = "render")
       edit_path ||= send("edit_#{element.class.name.underscore}_path", element)
 
-      send(render_method, partial: 'common-views/table_standard_buttons_tag', formats: [:html],
+      send(render_method, partial: "#{TEMPLATE_PATH}/table_standard_buttons_tag", formats: [:html],
         locals: { element: element, edit_path: edit_path })
     end
 
