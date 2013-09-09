@@ -4,23 +4,11 @@ module CommonViews
     IGNORED_COLUMNS = %w(id created_at updated_at)
     TEMPLATE_PATH = 'common_views'
 
-    # def full_title(page_title)
-    #   t("title") + (" | #{page_title}" unless page_title.blank?).to_s
-    # end
-
-    def form_standard_buttons_tag(f, controller)
-      render "#{TEMPLATE_PATH}/form_standard_buttons_tag", f: f, controller: controller
-    end
-
     def table_standard_buttons_tag(element, render_method = "render")
       edit_path ||= send("edit_#{element.class.name.underscore}_path", element)
 
       send(render_method, partial: "#{TEMPLATE_PATH}/table_standard_buttons_tag", formats: [:html],
         locals: { element: element, edit_path: edit_path })
-    end
-
-    def create_button_for(type, title = 'Dodaj')
-      render "#{TEMPLATE_PATH}/create_button_for", type: type, title: title if can? :create, type
     end
 
     def simple_table_for(items)
