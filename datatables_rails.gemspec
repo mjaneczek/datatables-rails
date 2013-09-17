@@ -1,8 +1,10 @@
-$:.push File.expand_path("../lib", __FILE__)
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
 require "datatables_rails/version"
 
-Gem::Specification.new do |s|
-  spec.name          = "datatables-rails"
+Gem::Specification.new do |spec|
+  spec.name          = "datatables_rails"
   spec.version       = DatatablesRails::VERSION
   spec.authors       = ["Michał Janeczek", "Mercomp"]
   spec.email         = ["michal.janeczek@ymail.com", "info@mercomp.pl"]
