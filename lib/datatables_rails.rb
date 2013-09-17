@@ -1,8 +1,7 @@
-require 'rails'
-require 'common_views/helpers'
-require 'common_views/settings'
+require 'datatables_rails/helpers'
+require 'datatables_rails/settings'
 
-module CommonViews
+module DatatablesRails
   class Railtie < ::Rails::Engine
 
     #config.app_generators do |g|
@@ -12,8 +11,8 @@ module CommonViews
       #end
 
     #initializer "extend Controller with sorcery" do |app|
-      #ActionController::Base.send(:include, CommonViews::Controller)
-      #ActionView::Base.send(:include, CommonViews::Helpers)
+      #ActionController::Base.send(:include, DatatablesRails::Controller)
+      #ActionView::Base.send(:include, DatatablesRails::Helpers)
       #end
   end
 end

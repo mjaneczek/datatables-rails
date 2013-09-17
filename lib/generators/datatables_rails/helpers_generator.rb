@@ -1,6 +1,6 @@
 require 'rails/generators'
 
-module CommonViews
+module DatatablesRails
   module Generators
     class HelpersGenerator < Rails::Generators::Base
       source_root File.expand_path("../../templates/helpers", __FILE__)
@@ -11,7 +11,7 @@ module CommonViews
         #directory 'files', '.', force: options.force?
 
         inject_into_class "app/controllers/application_controller.rb", "ApplicationController", <<-RUBY
-  helper CommonViews::Helpers
+  helper DatatablesRails::Helpers
         RUBY
       end
 

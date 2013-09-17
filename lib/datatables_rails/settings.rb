@@ -1,4 +1,4 @@
-module CommonViews
+module DatatablesRails
   class Settings
     @@settings = { }
 
