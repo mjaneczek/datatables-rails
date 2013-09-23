@@ -1,17 +1,15 @@
 module DatatablesRails
   class DataManager
-    delegate :params, to: :@view
-
     attr_accessor :last_column_template, :first_column_template
 
-    def initialize(view)
-      @view = view
+    def initialize(request_paramas)
+      @params = request_paramas
       @custom_templates = {}
       @custom_filters = {}
     end
 
     def register_custom_template(symbol, &block)
-      @custom_templates[symbol] = block
+      TemplateService.register(symbol, block)
     end
 
     def register_custom_filter(symbol, &block)
@@ -52,8 +50,7 @@ module DatatablesRails
         row << first_column if first_column
         
         row += options.columns.map do |column|
-          next @custom_templates[column].call(item) if @custom_templates[column]
-          item.try(column).try(:to_s)
+          TemplateService.try_get(column, item) || item.try(column).try(:to_s)
         end 
 
         row << last_column_template.call(item) if last_column_template
