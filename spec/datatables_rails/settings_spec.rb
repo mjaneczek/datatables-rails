@@ -7,7 +7,7 @@ describe DatatablesRails::Settings do
   end
 
   it "should return yml structure" do
-    expect(settings.model_name[:columns]).to eq ["name", "number", "size", "count"]
+    expect(settings.model_name[:columns]).to eq ["name", "number"]
   end
 
   it "should raise NoMethodError if root not exist" do

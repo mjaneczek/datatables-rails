@@ -1,3 +1,5 @@
+require 'ostruct'
+
 module DatatablesRails
   class DataManager
     attr_accessor :templates, :filters, :additional_columns
@@ -7,38 +9,33 @@ module DatatablesRails
       initialize_default_services
     end
 
-    def generate_json(source, options = nil, filter_module = ActiveRecordAjaxDatatable, settings_name = nil)
-      return JsonGenerator.generate(@params.echo_number) unless detect_class_name
+    def generate_json(source, parameters = {})
+      @source = source
+      return empty_answer unless detect_class_name
 
-      unless options
-        settings_name ||= @source_class_name
+      @options = parameters[:options] &&= OpenStruct.new(parameters[:options])
+      load_default_options(parameters[:settings_name]) unless @options
 
-        options = TableParameters.new(Settings.send(settings_name).try(:[], "columns"),
-          Settings.send(settings_name).try(:[], "search_columns"))
-      end
+      filter_data
 
-      filtered_records_count, data = filter_data(source, options, filter_module).values
-
-      return JsonGenerator.generate(@params.echo_number, format_data(data, options),
-        get_source_count(source), filtered_records_count)
+      return JsonGenerator.generate(@params.echo_number, format_data,
+        get_source_count, @records_count_after_filter)
     end
 
-    def filter_data(source, options, filter_module = ActiveRecordAjaxDatatable)
-      source = @filters.try_call(@source_class_name, source, @params) || source
-      (source = filter_module.search_data(source, options.filter_column, @params.search_text)) if @params.search_text.present?
-      total_display_records = get_source_count(source)
-      source = filter_module.sort_data(source, find_sort_column_name(options.columns), @params.sort_direction)
-      source = filter_module.page_data(source, @params.page, @params.per_page)
-
-      return { total_display_records: total_display_records, data: source }
+    def filter_data
+      detect_or_set_default_filter_module
+      filter_by_custom_filters_if_exist
+      filter_by_searched_text_if_exists
+      @source = @options.filter_module.sort_data(@source, find_sort_column_name, @params.sort_direction)
+      @source = @options.filter_module.page_data(@source, @params.page, @params.per_page)
     end
 
-    def format_data(source, options)
-      source.map do |item|
+    def format_data
+      @source.map do |item|
         row = []
         row = push_unless_nil(row, @additional_columns.try_call(:first, item))
 
-        row += options.columns.map do |column|
+        row += @options.columns.map do |column|
           @templates.try_call(column, item) || item.try(column).try(:to_s)
         end 
 
@@ -48,28 +45,58 @@ module DatatablesRails
 
   private
 
+    def filter_by_custom_filters_if_exist
+      @source = @filters.try_call(@source_class_name, @source, @params) || @source
+    end
+
+    def filter_by_searched_text_if_exists
+      if @params.search_text.present?
+        @source = @options.filter_module.search_data(@source, @options.filter_column, @params.search_text)
+      end
+
+      @records_count_after_filter = get_source_count
+    end
+
     def initialize_default_services
       @templates = CustomizeService.new
       @filters = CustomizeService.new
       @additional_columns = CustomizeService.new
     end
 
+    def load_default_options(settings_name)
+      settings_name ||= @source_class_name
+      @options = OpenStruct.new(Settings.send(settings_name))
+    end
+
+    def detect_or_set_default_filter_module
+      if @options.filter_module
+        @options.filter_module = eval(@options.filter_module)
+      else
+        @options.filter_module = ActiveRecordSource
+      end
+    end
+
     def push_unless_nil(array, item)
       array << item if item
+      array
     end
 
-    def find_sort_column_name(columns)
+    def empty_answer
+      JsonGenerator.generate(@params.echo_number)
+    end
+
+    def find_sort_column_name
       index = @params.sort_column_index
-      index -= 1 if first_column_template && index != 0
-      columns[index].to_s
+      index -= 1 if @additional_columns.items[:first] && index != 0
+      @options.columns[index].to_s
     end
 
-    def get_source_count(source)
-      source.count.try(:length) || source.count
+    def get_source_count
+      @source.count.try(:length) || @source.count
     end
 
-    def detect_class_name(source)
-      @source_class_name = source.first.try(:class).try(:name).try(:underscore)
+    def detect_class_name
+      @source_class_name = @source.first.try(:class).try(:name).try(:underscore)
     end
   end
 end

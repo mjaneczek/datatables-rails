@@ -1,2 +1,3 @@
 model_name:
-  columns: [ name, number, size, count ]
+  columns: [ name, number ]
+  filter_module: ArraySource
