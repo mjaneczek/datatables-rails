@@ -1,17 +1,10 @@
 module DatatablesRails
   class DataManager
-    attr_accessor :last_column_template, :first_column_template
+    attr_accessor :templates, :filters, :additional_columns
 
     def initialize(request_paramas)
       @params = request_paramas
-    end
-
-    def register_custom_template(symbol, &block)
-      TemplateService.register(symbol, block)
-    end
-
-    def register_custom_filter(symbol, &block)
-      FiltersService.register(symbol, block)
+      initialize_default_services
     end
 
     def generate_json(source, options = nil, filter_module = ActiveRecordAjaxDatatable, settings_name = nil)
@@ -31,7 +24,7 @@ module DatatablesRails
     end
 
     def filter_data(source, options, filter_module = ActiveRecordAjaxDatatable)
-      source = FiltersService.try_call(@source_class_name, source, params) || source
+      source = @filters.try_call(@source_class_name, source, params) || source
       (source = filter_module.search_data(source, options.filter_column, params[:sSearch])) if params[:sSearch].present?
       total_display_records = get_source_count(source)
       source = filter_module.sort_data(source, find_sort_column_name(options.columns), sort_direction)
@@ -43,19 +36,27 @@ module DatatablesRails
     def format_data(source, options)
       source.map do |item|
         row = []
+        row = push_unless_nil(row, @additional_columns.try_call(:first, item))
 
-        first_column = first_column_template.call(item) if first_column_template
-        row << first_column if first_column
-        
         row += options.columns.map do |column|
-          TemplateService.try_call(column, item) || item.try(column).try(:to_s)
+          @templates.try_call(column, item) || item.try(column).try(:to_s)
         end 
 
-        row << last_column_template.call(item) if last_column_template
+        row = push_unless_nil(row, @additional_columns.try_call(:last, item))
       end
     end
 
   private
+
+    def initialize_default_services
+      @templates = CustomizeService.new
+      @filters = CustomizeService.new
+      @additional_columns = CustomizeService.new
+    end
+
+    def push_unless_nil(array, item)
+      array << item if item
+    end
 
     def page
       params[:iDisplayStart].to_i/per_page + 1

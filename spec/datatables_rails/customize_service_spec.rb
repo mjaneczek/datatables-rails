@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe DatatablesRails::CustomizeService do
-  let(:service) { DatatablesRails::CustomizeService }
+  let(:service) { DatatablesRails::CustomizeService.new }
 
   before(:each) do
     service.register(:symbol) do |field|
