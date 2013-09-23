@@ -2,13 +2,13 @@ module DatatablesRails
   class DataManager
     attr_accessor :templates, :filters, :additional_columns
 
-    def initialize(request_paramas)
-      @params = request_paramas
+    def initialize(params)
+      @params = RequestParameters.new(params)
       initialize_default_services
     end
 
     def generate_json(source, options = nil, filter_module = ActiveRecordAjaxDatatable, settings_name = nil)
-      return JsonGenerator.generate(params[:sEcho].to_i) unless detect_class_name
+      return JsonGenerator.generate(@params.echo_number) unless detect_class_name
 
       unless options
         settings_name ||= @source_class_name
@@ -19,16 +19,16 @@ module DatatablesRails
 
       filtered_records_count, data = filter_data(source, options, filter_module).values
 
-      return JsonGenerator.generate(params[:sEcho].to_i, format_data(data, options),
+      return JsonGenerator.generate(@params.echo_number, format_data(data, options),
         get_source_count(source), filtered_records_count)
     end
 
     def filter_data(source, options, filter_module = ActiveRecordAjaxDatatable)
-      source = @filters.try_call(@source_class_name, source, params) || source
-      (source = filter_module.search_data(source, options.filter_column, params[:sSearch])) if params[:sSearch].present?
+      source = @filters.try_call(@source_class_name, source, @params) || source
+      (source = filter_module.search_data(source, options.filter_column, @params.search_text)) if @params.search_text.present?
       total_display_records = get_source_count(source)
-      source = filter_module.sort_data(source, find_sort_column_name(options.columns), sort_direction)
-      source = filter_module.page_data(source, page, per_page)
+      source = filter_module.sort_data(source, find_sort_column_name(options.columns), @params.sort_direction)
+      source = filter_module.page_data(source, @params.page, @params.per_page)
 
       return { total_display_records: total_display_records, data: source }
     end
@@ -58,22 +58,10 @@ module DatatablesRails
       array << item if item
     end
 
-    def page
-      params[:iDisplayStart].to_i/per_page + 1
-    end
-
-    def per_page
-      params[:iDisplayLength].to_i > 0 ? params[:iDisplayLength].to_i : 10
-    end
-
     def find_sort_column_name(columns)
-      index = params[:iSortCol_0].to_i
+      index = @params.sort_column_index
       index -= 1 if first_column_template && index != 0
       columns[index].to_s
-    end
-
-    def sort_direction
-      params[:sSortDir_0] == "desc" ? "desc" : "asc"
     end
 
     def get_source_count(source)
@@ -83,6 +71,5 @@ module DatatablesRails
     def detect_class_name(source)
       @source_class_name = source.first.try(:class).try(:name).try(:underscore)
     end
-
   end
 end
