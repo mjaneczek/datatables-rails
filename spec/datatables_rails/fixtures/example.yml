@@ -1,0 +1,2 @@
+model_name:
+  columns: [ name, number, size, count ]
