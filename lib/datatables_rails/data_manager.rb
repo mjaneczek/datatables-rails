@@ -2,7 +2,7 @@ require 'ostruct'
 
 module DatatablesRails
   class DataManager
-    attr_accessor :templates, :filters, :additional_columns
+    attr_accessor :templates, :additional_filters, :additional_columns
 
     def initialize(params)
       @params = RequestParameters.new(params)
@@ -13,21 +13,18 @@ module DatatablesRails
       @source = source
       return empty_answer unless detect_class_name
 
-      @options = parameters[:options] &&= OpenStruct.new(parameters[:options])
-      load_default_options(parameters[:settings_name]) unless @options
-
+      load_options_from_parameter_or_settings_file(parameters)
       filter_data
-
+      
       return JsonGenerator.generate(@params.echo_number, format_data,
-        get_source_count, @records_count_after_filter)
+        @source.count, @records_count_after_filter)
     end
 
     def filter_data
       detect_or_set_default_filter_module
-      filter_by_custom_filters_if_exist
-      filter_by_searched_text_if_exists
-      @source = @options.filter_module.sort_data(@source, find_sort_column_name, @params.sort_direction)
-      @source = @options.filter_module.page_data(@source, @params.page, @params.per_page)
+      data_filter = DataFilter.new(detect_class_name, @params, @options, additional_filters, additional_columns)
+      @source = data_filter.get_filtered_data(@source)
+      @records_count_after_filter = data_filter.get_source_count_after_filter
     end
 
     def format_data
@@ -44,28 +41,20 @@ module DatatablesRails
     end
 
   private
-
-    def filter_by_custom_filters_if_exist
-      @source = @filters.try_call(@source_class_name, @source, @params) || @source
-    end
-
-    def filter_by_searched_text_if_exists
-      if @params.search_text.present?
-        @source = @options.filter_module.search_data(@source, @options.filter_column, @params.search_text)
-      end
-
-      @records_count_after_filter = get_source_count
-    end
-
     def initialize_default_services
       @templates = CustomizeService.new
-      @filters = CustomizeService.new
+      @additional_filters = CustomizeService.new
       @additional_columns = CustomizeService.new
     end
 
     def load_default_options(settings_name)
       settings_name ||= @source_class_name
       @options = OpenStruct.new(Settings.send(settings_name))
+    end
+
+    def load_options_from_parameter_or_settings_file(parameters)
+      @options = parameters[:options] &&= OpenStruct.new(parameters[:options])
+      load_default_options(parameters[:settings_name]) unless @options
     end
 
     def detect_or_set_default_filter_module
@@ -83,16 +72,6 @@ module DatatablesRails
 
     def empty_answer
       JsonGenerator.generate(@params.echo_number)
-    end
-
-    def find_sort_column_name
-      index = @params.sort_column_index
-      index -= 1 if @additional_columns.items[:first] && index != 0
-      @options.columns[index].to_s
-    end
-
-    def get_source_count
-      @source.count.try(:length) || @source.count
     end
 
     def detect_class_name
