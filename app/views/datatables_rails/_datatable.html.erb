@@ -1,0 +1,15 @@
+<table class="table table-striped" id="datatables_rails"
+  data-source = "<%= options.source_path %>"
+  data-sorting_column = "<%= options.sorting_column %>"
+  data-sorting_type = "<%= options.sorting_type %>"
+  data-columns_without_sorting = "<%= options.columns_without_sorting %>">
+  <thead>
+    <tr>
+      <%= render partial: "datatables_rails/additional_column", locals: { symbol: :first, options: options} %>
+      <% options.columns.try(:each) do |column| %>
+        <th><%= class_type.human_attribute_name(column) %></th>
+      <% end %>
+      <%= render partial: "datatables_rails/additional_column", locals: { symbol: :last, options: options} %>
+    </tr>
+  </thead>
+</table>

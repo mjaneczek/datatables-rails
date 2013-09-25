@@ -1,20 +1,20 @@
 $ ->
-  sorting_column = $('#simple_table').data('sorting_column')
-  sorting_type = $('#simple_table').data('sorting_type')
-  disable_edit_delete = $('#simple_table').data('disable_edit_delete')
+  sorting_column = $('#datatables_rails').data('sorting_column')
+  sorting_type = $('#datatables_rails').data('sorting_type')
+  disable_edit_delete = $('#datatables_rails').data('disable_edit_delete')
 
   $.extend $.fn.dataTableExt.oStdClasses,
     sWrapper: "dataTables_wrapper form-inline"
 
-  o_table = $("#simple_table").dataTable(
+  o_table = $("#datatables_rails").dataTable(
     aaSorting: [[ sorting_column, sorting_type ]],
     bSortClasses: false
     bProcessing: true
     bServerSide: true
-    sAjaxSource: $('#simple_table').data('source')
+    sAjaxSource: $('#datatables_rails').data('source')
     aoColumnDefs: [
       bSortable: false
-      aTargets: [$("#simple_table thead tr th").length - 1].concat($('#simple_table').data('column_without_sorting'))
+      aTargets: [$("#datatables_rails thead tr th").length - 1].concat($('#datatables_rails').data('column_without_sorting'))
     ] unless disable_edit_delete
     fnServerParams: (aoData) ->
         column_filter = $("#selected_column").val()

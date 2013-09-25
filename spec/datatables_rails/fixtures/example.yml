@@ -1,3 +1,9 @@
 model_name:
   columns: [ name, number ]
   filter_module: ArraySource
+
+product:
+  columns: [name]
+  columns_without_sorting: [0]
+  additional_columns:
+    first: "first column name"

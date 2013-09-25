@@ -1,5 +1,8 @@
+require "rails/all"
 require 'rubygems'
 require 'bundler/setup'
+require 'active_support'
+require 'rspec/rails'
 
 Bundler.require(:default, :development)
 
@@ -14,3 +17,5 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = 'random'
 end
+
+ActionController::Base.prepend_view_path File.dirname(__FILE__) + "/../app/views"

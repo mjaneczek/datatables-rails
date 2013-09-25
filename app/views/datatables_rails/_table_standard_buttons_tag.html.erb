@@ -1,4 +1,0 @@
-<span class="pull-right">
-  <%= link_to('Edytuj', edit_path, class: 'btn btn-sm btn-default') if can? :update, element %>
-  <%= link_to('Usuń', element, method: :delete, data: { confirm: 'Czy jesteś pewien?' }, class: 'btn btn-sm btn-danger') if can? :destroy, element %>
-</span>
