@@ -28,4 +28,8 @@ class RequestParameters
   def search_text
     params[:sSearch]
   end
+
+  def [](index)
+    params[index]
+  end
 end

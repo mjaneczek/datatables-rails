@@ -17,8 +17,7 @@ describe "DatatablesRails", ->
   fake_data = (name) ->
     "fake #{name}"
 
-  it "should pass arguments from table data to datatable function", ->
-    expect(dataTableFunction).toHaveBeenCalledWith({
+  parameters = {
       sAjaxSource: "fake source"
       aaSorting: [["fake sorting_column", "fake sorting_type"]]
       bSortClasses: false
@@ -30,4 +29,18 @@ describe "DatatablesRails", ->
       ]
       oLanguage:
         sUrl: "path_to_file"
-      })
+      }
+
+  it "should pass arguments from table data to datatable function", ->
+    table.init()
+    expect(dataTableFunction).toHaveBeenCalledWith(parameters)
+
+  it "should pass additional data from additional_params method", ->
+    function_adding_params = (data) ->
+      data.push({ name: "additional_param_name", value: "additional_param_value" })
+
+    table.additional_params = function_adding_params
+    table.init()
+    
+    parameters["fnServerParams"] = function_adding_params
+    expect(dataTableFunction).toHaveBeenCalledWith(parameters)
