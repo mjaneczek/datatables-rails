@@ -16,7 +16,7 @@ module DatatablesRails
       load_options_from_parameter_or_settings_file(parameters)
 
       return JsonGenerator.generate(@params.echo_number, filter_data && format_data,
-        @source.count, @records_count_after_filter)
+        @source.size, @records_count_after_filter)
     end
 
     def filter_data

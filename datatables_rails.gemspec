@@ -24,4 +24,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec-rails"
   spec.add_development_dependency "guard-rspec"
   spec.add_development_dependency "rspec-html-matchers"
+  spec.add_development_dependency "jasmine-rails"
 end

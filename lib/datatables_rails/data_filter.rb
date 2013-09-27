@@ -29,10 +29,10 @@ module DatatablesRails
 
       def filter_by_searched_text_if_exists(source)
         if @request_params.search_text.present?
-          source = @options.filter_module.search_data(source, @options.filter_column, @request_params.search_text)
+          source = @options.filter_module.search_data(source, @options.search_columns, @request_params.search_text)
         end
 
-        @records_count_after_filter = source.count
+        @records_count_after_filter = source.size
         source
       end
 

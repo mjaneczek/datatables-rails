@@ -18,7 +18,7 @@ describe DatatablesRails::DataFilter do
   end
 
   let(:options) do
-    double(columns: ["name"], filter_column: ["name"], filter_module: DatatablesRails::ArraySource)
+    double(columns: ["name"], search_columns: ["name"], filter_module: DatatablesRails::ArraySource)
   end
 
   let(:empty_customize_service) do
