@@ -25,6 +25,19 @@ describe DatatablesRails::ActiveRecordSource do
     source_helper.search_data(source, ["col1", "col2"], "find_me")
   end
 
+  it "should get source count" do
+    expect_total_count_to_eq_3_if_count_returns(3, {1 => 1, 2 => 2, 3 => 3})
+  end
+
+  def expect_total_count_to_eq_3_if_count_returns(*return_values)
+    fake_active_record_source = double()
+
+    return_values.each do |value|
+      allow(fake_active_record_source).to receive(:count).and_return(value)
+      expect(source_helper.get_total_count(fake_active_record_source)).to eq 3
+    end
+  end
+
   module ActiveRecord
     class Base
       def self.sanitize_sql_array(query)

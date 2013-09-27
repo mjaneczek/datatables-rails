@@ -3,6 +3,7 @@ require 'ostruct'
 module DatatablesRails
   class DataManager
     attr_accessor :templates, :additional_filters, :additional_columns
+    delegate :filter_module, to: :@options
 
     def initialize(params)
       @params = RequestParameters.new(params)
@@ -16,11 +17,12 @@ module DatatablesRails
       load_options_from_parameter_or_settings_file(parameters)
 
       return JsonGenerator.generate(@params.echo_number, filter_data && format_data,
-        @source.size, @records_count_after_filter)
+        @records_count_before_filter, @records_count_after_filter)
     end
 
     def filter_data
       detect_or_set_default_filter_module
+      @records_count_before_filter = filter_module.get_total_count(@source)
       data_filter = DataFilter.new(@source_class_name, @params, @options, additional_filters, additional_columns)
       @source = data_filter.get_filtered_data(@source)
       @records_count_after_filter = data_filter.get_source_count_after_filter

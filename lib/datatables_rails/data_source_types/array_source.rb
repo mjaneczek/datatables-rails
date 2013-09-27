@@ -17,6 +17,10 @@ module DatatablesRails
           end
         end
       end
+
+      def get_total_count(source)
+        source.count
+      end
     end
   end
 end

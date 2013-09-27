@@ -13,6 +13,10 @@ module DatatablesRails
         source.where(prepare_where_sql(filtered_columns, search_text))
       end
 
+      def get_total_count(source)
+        source.count.try(:length) || source.count
+      end
+
       private
         def prepare_where_sql(filtered_columns, search_text)
           query = String.new

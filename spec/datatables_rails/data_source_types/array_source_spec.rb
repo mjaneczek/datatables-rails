@@ -26,4 +26,8 @@ describe DatatablesRails::ActiveRecordSource do
       expect(data.first.name).to eq value
     end
   end
+
+  it "should get source count" do
+    expect(source_helper.get_total_count([1, 2, 3])).to eq 3
+  end
 end
