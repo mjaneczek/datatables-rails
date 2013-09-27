@@ -1,5 +1,5 @@
 this.DatatablesRails = class DatatablesRails
-  constructor: ->
+  constructor: (language_file) ->
     this.load_data_from_table()
 
     $("#datatables_rails").dataTable(
@@ -12,6 +12,8 @@ this.DatatablesRails = class DatatablesRails
         bSortable: false
         aTargets: @columns_without_sorting
       ]
+      oLanguage:
+        (sUrl: language_file) if language_file
     )
 
   load_data_from_table: ->

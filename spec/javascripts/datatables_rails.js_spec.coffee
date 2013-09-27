@@ -8,7 +8,7 @@ describe "DatatablesRails", ->
   beforeEach ->
     dataTableFunction = spy_datatable_function()
     spyOn($.fn, "data").andCallFake(fake_data)
-    table = new DatatablesRails
+    table = new DatatablesRails("path_to_file")
 
   spy_datatable_function = ->
     $.fn.dataTable = (params) ->
@@ -27,4 +27,7 @@ describe "DatatablesRails", ->
       aoColumnDefs: [
         bSortable: false
         aTargets: "fake columns_without_sorting"
-      ]})
+      ]
+      oLanguage:
+        sUrl: "path_to_file"
+      })
