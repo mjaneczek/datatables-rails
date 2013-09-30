@@ -1,0 +1,1 @@
+DatatablesRails::Settings.load!("#{Rails.root}/config/datatables_config.yml")

@@ -1,0 +1,2 @@
+example_model_name:
+  columns: [ name, size ]
