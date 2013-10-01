@@ -80,7 +80,7 @@ so your controller action can looks like:
     ...
     respond_to do |format|
       format.html { respond_with @products }
-      format.json { render json: datatables.generate_json(@products) }
+      format.json { render json: datatables_rails.generate_json(@products) }
     end
   end
   
