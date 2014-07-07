@@ -1,4 +1,4 @@
-# DatatablesRails
+# DatatablesRails [![Code Climate](https://codeclimate.com/github/mjaneczek/datatables-rails.png)](https://codeclimate.com/github/mjaneczek/datatables-rails)
 
 Want to use DataTables in your rails project? This gem can help you!
 DatatablesRails is a wrapper that makes DataTables easier to use, provides configuration file, AJAX support, eliminates duplicates.
